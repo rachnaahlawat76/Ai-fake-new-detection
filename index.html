@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Fake News Detection</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+</head>
+
+<body>
+    <main class="container">
+        <header>
+            <div class="icon">📰</div>
+            <h1>AI Fake News Detection</h1>
+            <p>
+                Analyze news text using a Machine Learning model.
+            </p>
+        </header>
+
+        <section class="notice">
+            <strong>Important:</strong>
+            This tool provides a model-based prediction, not
+            a verified fact-check. Always verify news with
+            reliable sources.
+        </section>
+
+        <form id="news-form" action="/predict" method="POST">
+            <label for="news_text">Enter News Text</label>
+
+            <textarea
+                id="news_text"
+                name="news_text"
+                rows="9"
+                placeholder="Paste the news article here..."
+                required
+            >{{ news_text or '' }}</textarea>
+
+            <button id="analyze-button" type="submit">
+                Analyze News
+            </button>
+        </form>
+
+        {% if error %}
+            <section class="message error" role="alert">
+                <h2>Unable to Analyze</h2>
+                <p>{{ error }}</p>
+            </section>
+        {% endif %}
+
+        {% if result %}
+            <section class="result-card {{ result_class }}">
+                <h2>Prediction Result</h2>
+
+                <p class="result-label">{{ result }}</p>
+
+                <p>{{ explanation }}</p>
+            </section>
+        {% endif %}
+
+        <footer>
+            <p>
+                Built with Python, Flask and Scikit-learn.
+            </p>
+            <p>Machine learning predictions can be incorrect.</p>
+        </footer>
+    </main>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
